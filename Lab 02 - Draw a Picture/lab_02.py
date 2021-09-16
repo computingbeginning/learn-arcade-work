@@ -17,7 +17,13 @@ arcade.set_background_color(arcade.csscolor.DEEP_SKY_BLUE)
 # Starts the drawing
 arcade.start_render()
 
-# Actual code goes here
+"""
+This code consists of a blue background and a brown tree branch.
+The body of the bird is made up of an arc on bottom, a rectangle for the main part, and
+triangles for feathers on it's head.
+It has two rectangles for legs, two black circles for eyes, and two polygons for it's wings.
+Finally, it has a large rounded nose (because I thought it was funny) made from an eclipse.
+"""
 
 # This makes a tree branch for the bird
 arcade.draw_lrtb_rectangle_filled(0, 800, 100, 0, arcade.csscolor.CHOCOLATE)
@@ -28,7 +34,7 @@ arcade.draw_rectangle_filled(300, 150, 50, 200, arcade.csscolor.GOLD)
 # Second leg
 arcade.draw_rectangle_filled(500, 150, 50, 200, arcade.csscolor.GOLD)
 
-# The main body will be made of an arc at the bottom and a square for the middle
+# The main body will be made of an arc at the bottom and a square for the middle.
 
 # Lower body
 arcade.draw_arc_filled(400, 250, 500, 200, arcade.csscolor.GREEN, 180, 360)
@@ -69,8 +75,13 @@ arcade.draw_triangle_filled(x1=525,
                             y3=550,
                             color=arcade.csscolor.GREEN)
 
-# Triangle for beak
-arcade.draw_triangle_filled(400, 450, 400, 400, 475, 425, arcade.csscolor.YELLOW)
+"""
+This code was originally for a beak
+However, I changed the nose of the bird to a rounded shape
+Because of this, I decided to comment the code for the beak out
+It is still here for reference though, just in case
+"""
+# arcade.draw_triangle_filled(400, 450, 400, 400, 475, 425, arcade.csscolor.YELLOW)
 
 # Circles for eyes
 arcade.draw_circle_filled(300, 500, 25, arcade.csscolor.BLACK)
@@ -78,15 +89,24 @@ arcade.draw_circle_filled(300, 500, 25, arcade.csscolor.BLACK)
 arcade.draw_circle_filled(500, 500, 25, arcade.csscolor.BLACK)
 
 # Polygon for wing
-arcade.draw_polygon_filled(((175, 325),
-                            (200, 250),
+arcade.draw_polygon_filled(((175, 340),
+                            (200, 260),
                             (225, 230),
-                            (250, 250),
-                            (275, 325)
+                            (250, 260),
+                            (275, 340)
                             ),
                            arcade.csscolor.GREENYELLOW)
 
-# Light spot on the belly with ellipse (Never mind, this is the new nose)
+# Polygon for wing 2
+arcade.draw_polygon_filled(((525, 340),
+                            (550, 260),
+                            (575, 230),
+                            (600, 260),
+                            (625, 340)
+                            ),
+                           arcade.csscolor.GREENYELLOW)
+
+# Lighter colored nose with ellipse
 arcade.draw_ellipse_filled(400, 400, 200, 150, arcade.csscolor.GREENYELLOW)
 
 # Finishes the drawing
