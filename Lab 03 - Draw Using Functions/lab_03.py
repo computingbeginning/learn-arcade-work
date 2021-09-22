@@ -30,8 +30,12 @@ def draw_small_fish(x, y):
     arcade.draw_circle_filled(x + 65, y + 10, 7, arcade.csscolor.BLACK, num_segments=32)
 
 
-# def draw_medium_fish():
+def draw_medium_fish(x, y):
     # This is for a medium sized fish
+    arcade.draw_arc_filled(x + 125, y, 75, 75, arcade.csscolor.GOLD, 90, 270)
+    arcade.draw_ellipse_filled(x, y, 225, 75, arcade.csscolor.GOLDENROD)
+    arcade.draw_arc_filled(x, y, 50, 25, arcade.csscolor.GOLD, 270, 450)
+    arcade.draw_circle_filled(x - 50, y + 10, 7, arcade.csscolor.BLACK, num_segments=32)
 
 # def draw_football_fish():
 
@@ -45,6 +49,10 @@ def main():
     draw_small_fish(200, 500)
     draw_small_fish(150, 600)
     draw_small_fish(90, 540)
+
+    draw_medium_fish(250, 300)
+    draw_medium_fish(550, 650)
+
 
     # Ends the drawing and runs it
     arcade.finish_render()
