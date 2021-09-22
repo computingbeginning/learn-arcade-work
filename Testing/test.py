@@ -1,4 +1,4 @@
-i = 10
-while i >= 0:
-    print(i)
-    i -= 1
+import random
+
+my_number = random.random()
+print(my_number * 9 + 1)
