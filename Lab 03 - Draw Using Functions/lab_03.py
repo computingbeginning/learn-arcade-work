@@ -37,7 +37,12 @@ def draw_medium_fish(x, y):
     arcade.draw_arc_filled(x, y, 50, 25, arcade.csscolor.GOLD, 270, 450)
     arcade.draw_circle_filled(x - 50, y + 10, 7, arcade.csscolor.BLACK, num_segments=32)
 
-# def draw_football_fish():
+
+def draw_sun_fish():
+    # This is my third function for my sun fish
+    arcade.draw_triangle_filled(530, 250, 590, 250, 510, 350, arcade.csscolor.DARK_MAGENTA)
+    arcade.draw_triangle_filled(530, 150, 590, 150, 510, 60, arcade.csscolor.DARK_MAGENTA)
+    arcade.draw_ellipse_filled(550, 200, 125, 150, arcade.csscolor.DARK_ORCHID)
 
 
 def main():
@@ -53,6 +58,7 @@ def main():
     draw_medium_fish(250, 300)
     draw_medium_fish(550, 650)
 
+    draw_sun_fish()
 
     # Ends the drawing and runs it
     arcade.finish_render()
