@@ -1,4 +1,5 @@
-import random
 
-my_number = random.random()
-print(my_number * 9 + 1)
+
+def simpson_check(x):
+    if x == "simpson":
+        return "Match"
