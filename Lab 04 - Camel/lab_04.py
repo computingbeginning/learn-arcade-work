@@ -53,7 +53,7 @@ def main():
         # This is the code for when the player stops for the night
         # This resets their camel tiredness, but the natives get a bit closer.
         elif user_choice.upper() == "D":
-            print("You have stopped for the night")
+            print("You have stopped for the night.")
             camel_tiredness = 0
             print("The camel is feeling happy now!")
             new_distance = random.randrange(5, 16)
@@ -72,7 +72,7 @@ def main():
             natives_distance_traveled = (natives_distance_traveled + new_distance)
 
             # This is the code for finding an oasis.
-            if random.randrange(20) == 0:
+            if not done and random.randrange(20) == 0:
                 print("You have found an oasis!")
                 print("Your canteen is filled, your thirst is gone, and your camel is rested!")
                 canteen_drinks_remaining = 3
@@ -92,7 +92,7 @@ def main():
             natives_distance_traveled = (natives_distance_traveled + new_distance)
 
             # This is the code for finding an oasis.
-            if random.randrange(20) == 0:
+            if not done and random.randrange(20) == 0:
                 print("You have found an oasis!")
                 print("Your canteen is filled, your thirst is gone, and your camel is rested!")
                 canteen_drinks_remaining = 3
@@ -110,24 +110,24 @@ def main():
             else:
                 print("There are no drinks left in your canteen!")
 
-        if 4 < thirst <= 6:
+        if not done and 4 < thirst <= 6:
             print("You are thirsty.")
 
-        if thirst > 6:
+        if not done and thirst > 6:
             print("You died of thirst!")
             done = True
 
-        if 5 < camel_tiredness <= 8:
+        if not done and 5 < camel_tiredness <= 8:
             print("Your camel is tired.")
 
-        if camel_tiredness > 8:
+        if not done and camel_tiredness > 8:
             print("Your camel has died.")
             done = True
 
-        if natives_distance_traveled >= miles_traveled:
+        if not done and natives_distance_traveled >= miles_traveled:
             print("The natives have caught up to you!")
             done = True
-        elif natives_distance_traveled >= (miles_traveled - 15):
+        elif not done and natives_distance_traveled >= (miles_traveled - 15):
             print("The natives are getting close!")
 
         if not done and miles_traveled >= 200:
