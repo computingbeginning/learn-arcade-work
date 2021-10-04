@@ -1,8 +1,8 @@
-my_list = [5, 76, 8, 5, 3, 3, 56, 5, 23]
-
-list_total = 0
-
+my_list = [-4, -2, -56, -2, -30]
+positive_outlook_list = []
+biggest_number = my_list[0]
 for item in my_list:
-    list_total += item
+    if item >= 0:
+        positive_outlook_list.append(item)
 
-print(list_total)
+print(positive_outlook_list)
