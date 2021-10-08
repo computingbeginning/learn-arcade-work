@@ -9,6 +9,7 @@ class Room:
 
 def main():
     room_list = []
+    # room0 is the foyer of the mansion, the starting point
     room0 = Room("The Foyer of the mansion is grand, decorated with paintings and candlabras on the wall.\n"
                  "A chandelier hangs above the center of the room.\n"
                  "There are two doors present, one in the north face of the room, and one in the south face.",
