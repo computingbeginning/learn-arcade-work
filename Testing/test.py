@@ -1,36 +1,75 @@
-class Person():
-    def __init__(self):
-        self.name = ""
+import arcade
+import random
+
+SCREEN_WIDTH = 640
+SCREEN_HEIGHT = 480
 
 
-class Employee(Person):
+class Ball:
+    def __init__(self, position_x,
+                 position_y,
+                 change_x,
+                 change_y,
+                 radius,
+                 color):
+        self.position_x = position_x
+        self.position_y = position_y
+        self.change_x = change_x
+        self.change_y = change_y
+        self.radius = radius
+        self.color = color
 
-    def __init__(self):
-        # Call the parent/super class constructor first
-        super().__init__()
+    def draw(self):
+        arcade.draw_circle_filled(self.position_x,
+                                  self.position_y,
+                                  self.radius,
+                                  self.color)
 
-        # Now set up our variables
-        self.job_title = ""
+    def update(self):
+        self.position_x += self.change_x
+        self.position_y += self.change_y
+        if self.position_x <= self.radius:
+            self.change_x *= -1
+        if self.position_x >= SCREEN_WIDTH - self.radius:
+            self.change_x *= -1
+        if self.position_y <= self.radius:
+            self.change_y *= -1
+        if self.position_y >= SCREEN_HEIGHT - self.radius:
+            self.change_y *= -1
 
 
-class Customer(Person):
+class MyGame(arcade.Window):
+    def __init__(self, width, height, title):
+        super().__init__(width, height, title)
+        arcade.set_background_color(arcade.color.ASH_GREY)
 
-    def __init__(self):
-        super().__init__()
-        self.email = ""
+        self.ball_list = []
+        for i in range(50):
+            x = random.randrange(SCREEN_WIDTH)
+            y = random.randrange(SCREEN_HEIGHT)
+            cx = random.randrange(-3, 4)
+            cy = random.randrange(-3, 4)
+            radius = random.randrange(5, 21)
+            color = (random.randrange(256),
+                     random.randrange(256),
+                     random.randrange(256))
+            ball = Ball(x, y, cx, cy, radius, color)
+            self.ball_list.append(ball)
+
+    def on_draw(self):
+        arcade.start_render()
+        for ball in self.ball_list:
+            ball.draw()
+
+    def on_update(self, delta_time):
+        for ball in self.ball_list:
+            ball.update()
 
 
 def main():
-    john_smith = Person()
-    john_smith.name = "John Smith"
+    window = MyGame(SCREEN_WIDTH, SCREEN_HEIGHT, "Drawing Example")
 
-    jane_employee = Employee()
-    jane_employee.name = "Jane Employee"
-    jane_employee.job_title = "Web Developer"
-
-    bob_customer = Customer()
-    bob_customer.name = "Bob Customer"
-    bob_customer.email = "send_me@spam.com"
+    arcade.run()
 
 
 main()

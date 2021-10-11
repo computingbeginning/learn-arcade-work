@@ -96,15 +96,15 @@ def main():
 
     room11 = Room("Hidden room",
                   None,
-                  11,
-                  8,
-                  None)
+                  None,
+                  None,
+                  10)
     room_list.append(room11)
 
     room12 = Room("Locked Gate",
+                  1,
                   None,
-                  11,
-                  8,
+                  13,
                   None)
     room_list.append(room12)
 
