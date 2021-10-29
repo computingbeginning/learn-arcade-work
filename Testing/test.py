@@ -1,123 +1,102 @@
-import random
+""" Sprite Sample Program """
+
 import arcade
 
+# --- Constants ---
+SPRITE_SCALING_BOX = 0.5
 SPRITE_SCALING_PLAYER = 0.5
-SPRITE_SCALING_COIN = 0.2
-SPRITE_SCALING_LASER = 0.8
-COIN_COUNT = 50
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 
-BULLET_SPEED = 5
+MOVEMENT_SPEED = 5
 
 
 class MyGame(arcade.Window):
-    """ Main application class. """
+    """ This class represents the main window of the game. """
 
     def __init__(self):
         """ Initializer """
         # Call the parent class initializer
-        super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, "Sprites and Bullets Demo")
+        super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, "Sprites With Walls Example")
 
-        # Variables that will hold sprite lists
         self.player_list = None
-        self.coin_list = None
-        self.bullet_list = None
+        self.wall_list = None
 
-        # Set up the player info
         self.player_sprite = None
-        self.score = 0
 
-        # Don't show the mouse cursor
-        self.set_mouse_visible(False)
-
-        arcade.set_background_color(arcade.color.AMAZON)
+        self.physics_engine = None
 
     def setup(self):
-
-        """ Set up the game and initialize the variables. """
-
-        # Sprite lists
-        self.player_list = arcade.SpriteList()
-        self.coin_list = arcade.SpriteList()
-        self.bullet_list = arcade.SpriteList()
-
-        # Set up the player
-        self.score = 0
-
-        # Image from kenney.nl
-        self.player_sprite = arcade.Sprite("character.png", SPRITE_SCALING_PLAYER)
-        self.player_sprite.center_x = 50
-        self.player_sprite.bottom = 10
-        self.player_list.append(self.player_sprite)
-
-        # Create the coins
-        for i in range(COIN_COUNT):
-
-            # Create the coin instance
-            # Coin image from kenney.nl
-            coin = arcade.Sprite("coin_01.png", SPRITE_SCALING_COIN)
-
-            # Position the coin
-            coin.center_x = random.randrange(SCREEN_WIDTH)
-            coin.center_y = random.randrange(150, SCREEN_HEIGHT)
-
-            # Add the coin to the lists
-            self.coin_list.append(coin)
-
         # Set the background color
         arcade.set_background_color(arcade.color.AMAZON)
 
+        self.player_list = arcade.SpriteList()
+        self.wall_list = arcade.SpriteList()
+
+        self.score = 0
+
+        self.player_sprite = arcade.Sprite("character.png", SPRITE_SCALING_PLAYER)
+        self.player_sprite.center_x = 50
+        self.player_sprite.center_y = 64
+        self.player_list.append(self.player_sprite)
+
+        wall = arcade.Sprite("boxCrate_double.png", SPRITE_SCALING_BOX)
+        wall.center_x = 300
+        wall.center_y = 200
+        self.wall_list.append(wall)
+
+        wall = arcade.Sprite("boxCrate_double.png", SPRITE_SCALING_BOX)
+        wall.center_x = 364
+        wall.center_y = 200
+        self.wall_list.append(wall)
+
+        for x in range(173, 650, 64):
+            wall = arcade.Sprite("boxCrate_double.png", SPRITE_SCALING_BOX)
+            wall.center_x = x
+            wall.center_y = 350
+            self.wall_list.append(wall)
+
+        coordinate_list = [[400, 500],
+                           [470, 500],
+                           [400, 570],
+                           [470, 570]]
+
+        for coordinate in coordinate_list:
+            wall = arcade.Sprite("boxCrate_double.png", SPRITE_SCALING_BOX)
+            wall.center_x = coordinate[0]
+            wall.center_y = coordinate[1]
+            self.wall_list.append(wall)
+
+        self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, self.wall_list)
+
     def on_draw(self):
-        """
-        Render the screen.
-        """
-
-        # This command has to happen before we start drawing
         arcade.start_render()
-
-        # Draw all the sprites.
-        self.coin_list.draw()
+        self.wall_list.draw()
         self.player_list.draw()
-        self.bullet_list.draw()
 
-        # Render the text
-        arcade.draw_text(f"Score: {self.score}", 10, 20, arcade.color.WHITE, 14)
+    def on_key_press(self, key, modifiers):
+        """Called whenever a key is pressed. """
 
-    def on_mouse_motion(self, x, y, dx, dy):
-        """
-        Called whenever the mouse moves.
-        """
-        self.player_sprite.center_x = x
+        if key == arcade.key.UP:
+            self.player_sprite.change_y = MOVEMENT_SPEED
+        elif key == arcade.key.DOWN:
+            self.player_sprite.change_y = -MOVEMENT_SPEED
+        elif key == arcade.key.LEFT:
+            self.player_sprite.change_x = -MOVEMENT_SPEED
+        elif key == arcade.key.RIGHT:
+            self.player_sprite.change_x = MOVEMENT_SPEED
 
-    def on_mouse_press(self, x, y, button, modifiers):
-        """
-        Called whenever the mouse button is clicked.
-        """
-        bullet = arcade.Sprite("laserBlue01.png", SPRITE_SCALING_LASER)
-        bullet.center_x = self.player_sprite.center_x
-        bullet.angle = 90
-        bullet.bottom = self.player_sprite.top
-        bullet.change_y = BULLET_SPEED
-        self.bullet_list.append(bullet)
+    def on_key_release(self, key, modifiers):
+        """Called when the user releases a key. """
 
-    def update(self, delta_time):
-        """ Movement and game logic """
+        if key == arcade.key.UP or key == arcade.key.DOWN:
+            self.player_sprite.change_y = 0
+        elif key == arcade.key.LEFT or key == arcade.key.RIGHT:
+            self.player_sprite.change_x = 0
 
-        # Call update on all sprites
-        self.coin_list.update()
-        self.bullet_list.update()
-
-        for bullet in self.bullet_list:
-            hit_list = arcade.check_for_collision_with_list(bullet, self.coin_list)
-
-            if len(hit_list) > 0:
-                bullet.remove_from_sprite_lists()
-
-            for coin in hit_list:
-                self.score += 1
-                coin.remove_from_sprite_lists()
+    def on_update(self, delta_time: float):
+        self.physics_engine.update()
 
 
 def main():

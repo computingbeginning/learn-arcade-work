@@ -22,22 +22,33 @@ class Gem(arcade.Sprite):
         self.change_y = 0
 
     def update(self):
-        self.center_y -= self.change_y
-        self.center_x -= self.change_x
+        self.center_y += self.change_y
+        self.center_x += self.change_x
 
-        if self.right >= SCREEN_WIDTH:
+        if self.right >= SCREEN_WIDTH and self.change_x > 0:
             self.change_x *= -1
-        if self.left <= 0:
+        if self.left <= 0 and self.change_x < 0:
             self.change_x *= -1
-        if self.bottom <= 0:
+        if self.bottom <= 0 and self.change_y < 0:
             self.change_y *= -1
-        if self.top >= SCREEN_HEIGHT:
+        if self.top >= SCREEN_HEIGHT and self.change_y > 0:
             self.change_y *= -1
 
 
 class Bomb(arcade.Sprite):
     def __init__(self, filename, sprite_scaling):
         super().__init__(filename, sprite_scaling)
+
+    def update(self):
+        self.center_y += self.change_y
+        self.center_x += self.change_x
+
+        if self.top <= 0:
+            self.center_y = random.randrange(SCREEN_HEIGHT + 20, SCREEN_HEIGHT + 100)
+            self.center_x = random.randrange(SCREEN_WIDTH)
+        if self.right <= 0:
+            self.center_y = random.randrange(SCREEN_HEIGHT)
+            self.center_x = random.randrange(SCREEN_WIDTH + 20, SCREEN_WIDTH + 100)
 
 
 class MyGame(arcade.Window):
@@ -85,6 +96,10 @@ class MyGame(arcade.Window):
             bomb = Bomb("bomb.png", SPRITE_SCALING_BOMB)
             bomb.center_x = random.randrange(SCREEN_WIDTH)
             bomb.center_y = random.randrange(SCREEN_HEIGHT)
+            if i % 2 == 0:
+                bomb.change_x = -1
+            else:
+                bomb.change_y = -1
             self.bomb_list.append(bomb)
 
     def on_draw(self):
@@ -96,17 +111,21 @@ class MyGame(arcade.Window):
         output = f"Score: {self.score}"
         arcade.draw_text(output, 15, 20, arcade.color.WHITE, 14)
 
+        if len(self.gem_list) == 0 and self.score >= 45:
+            arcade.draw_text("You Win!", 325, 300, arcade.color.WHITE, 25)
+
+        if len(self.gem_list) == 0 and self.score < 45:
+            arcade.draw_text("Game over!", 325, 300, arcade.color.BLACK, 25)
+
     def on_mouse_motion(self, x, y, dx, dy):
-        if self.score >= 45 and len(self.gem_list) == 0:
-            # Figure out what goes here
-        else:
+        if len(self.gem_list) > 0:
             self.player_sprite.center_x = x
             self.player_sprite.center_y = y
 
     def update(self, delta_time):
-        if self.score >= 45 and len(self.gem_list) == 0:
-            # Figure out what goes here too, along with bomb update
-        self.gem_list.update()
+        if len(self.gem_list) > 0:
+            self.gem_list.update()
+            self.bomb_list.update()
 
         gem_hit_list = arcade.check_for_collision_with_list(self.player_sprite, self.gem_list)
         bomb_hit_list = arcade.check_for_collision_with_list(self.player_sprite, self.bomb_list)
@@ -118,7 +137,7 @@ class MyGame(arcade.Window):
 
         for bomb in bomb_hit_list:
             bomb.remove_from_sprite_lists()
-            self.score -= 1
+            self.score -= 2
             arcade.play_sound(self.hit_sound)
 
 
