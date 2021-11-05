@@ -21,7 +21,7 @@ COIN_COUNT = 15
 VIEWPORT_MARGIN = 100
 
 # How fast the camera pans to the player. 1.0 is instant.
-CAMERA_SPEED = 0.2
+CAMERA_SPEED = 0.25
 
 # How fast the character moves
 PLAYER_MOVEMENT_SPEED = 5
@@ -95,7 +95,13 @@ class MyGame(arcade.Window):
             wall.center_y = y
             self.wall_list.append(wall)
 
-        # Multiples of 64: 64, 128, 192, 256, 320, 384, 448, 512, 576, 640
+        for x in range(576, 768, 64):
+            wall = arcade.Sprite("snowCenter_rounded.png", SPRITE_SCALING)
+            wall.center_x = x
+            wall.center_y = 128
+            self.wall_list.append(wall)
+
+        # Multiples of 64: 64, 128, 192, 256, 320, 384, 448, 512, 576, 640, 704, 768
 
         coordinate_list = [[64, 192],
                            [128, 192],
@@ -120,6 +126,11 @@ class MyGame(arcade.Window):
         wall = arcade.Sprite("slimeBlock.png", SPRITE_SCALING)
         wall.center_x = 320
         wall.center_y = 256
+        self.wall_list.append(wall)
+
+        wall = arcade.Sprite("slimeBlock.png", SPRITE_SCALING)
+        wall.center_x = 576
+        wall.center_y = 70
         self.wall_list.append(wall)
 
         for i in range(COIN_COUNT):
