@@ -1,46 +1,60 @@
+import arcade
+
+WIDTH = 60
+HEIGHT = 60
+MARGIN = 5
+
+ROW_COUNT = 10
+COLUMN_COUNT = 10
+
+SCREEN_WIDTH = (WIDTH + MARGIN) * COLUMN_COUNT + MARGIN
+SCREEN_HEIGHT = (HEIGHT + MARGIN) * COLUMN_COUNT + MARGIN
+
+
+class MyGame(arcade.Window):
+    """
+    Main application class.
+    """
+
+    def __init__(self, width, height):
+        super().__init__(width, height)
+
+        arcade.set_background_color(arcade.color.BLACK)
+
+        self.grid = []
+
+        for row in range(ROW_COUNT):
+            self.grid.append([])
+            for column in range(COLUMN_COUNT):
+                self.grid[row].append(0)
+
+    def on_draw(self):
+        """
+        Render the screen.
+        """
+
+        arcade.start_render()
+
+        for row in range(ROW_COUNT):
+            for column in range(COLUMN_COUNT):
+                x = (WIDTH / 2) + column * (WIDTH + MARGIN) + MARGIN
+                y = HEIGHT / 2 + row * (HEIGHT + MARGIN) + MARGIN
+                arcade.draw_rectangle_filled(x, y,
+                                             WIDTH, HEIGHT,
+                                             arcade.color.LIGHT_CYAN)
+
+    def on_mouse_press(self, x, y, button, key_modifiers):
+        """
+        Called when the user presses a mouse button.
+        """
+        pass
+
+
 def main():
-    """ Read in lines from a file """
 
-    # Open the file for reading, and store a pointer to it in the new
-    # variable "file"
-    my_file = open("super_villains.txt")
-
-    name_list = []
-
-    # Loop through each line in the file like a list
-    for line in my_file:
-        line = line.strip()
-        name_list.append(line)
-        # print(line)
-
-    my_file.close()
-    print("There were", len(name_list), "names in the file.")
-
-    key = "Draco of Viridian"
-
-    lower_bound = 0
-    upper_bound = len(name_list) - 1
-    found = False
-
-    while lower_bound <= upper_bound and not found:
-        middle_pos = (lower_bound + upper_bound) // 2
-
-        if name_list[middle_pos] < key:
-            lower_bound = middle_pos + 1
-
-        elif name_list[middle_pos] > key:
-            upper_bound = middle_pos - 1
-
-        else:
-            found = True
-
-    if found:
-        print("Found at position:", middle_pos)
-
-    if not found:
-        print("Not found.")
+    window = MyGame(SCREEN_WIDTH, SCREEN_HEIGHT)
+    arcade.run()
 
 
-main()
-
-log2(n)  # quiz thing
+if __name__ == "__main__":
+    main()
