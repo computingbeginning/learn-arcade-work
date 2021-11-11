@@ -47,6 +47,8 @@ class MyGame(arcade.Window):
 
         self.physics_engine = None
 
+        self.coin_sound = arcade.load_sound("arcade_resources_sounds_coin2.wav")
+
         # Used in scrolling
         self.view_bottom = 0
         self.view_left = 0
@@ -180,19 +182,10 @@ class MyGame(arcade.Window):
         self.camera_gui.use()
 
         # Draw the GUI
+        # I kept parts of this because the white bar can print the score and cover the bottom edge from player view
         arcade.draw_rectangle_filled(self.width // 2, 20, self.width, 40, arcade.color.ALMOND)
-        text = f"Scroll value: ({self.camera_sprites.position[0]:5.1f}, {self.camera_sprites.position[1]:5.1f})"
+        text = "Score: " + str(self.score)
         arcade.draw_text(text, 10, 10, arcade.color.BLACK_BEAN, 20)
-
-        # Draw the box that we work to make sure the user stays inside of.
-        # This is just for illustration purposes. You'd want to remove this
-        # in your game.
-        left_boundary = VIEWPORT_MARGIN
-        right_boundary = self.width - VIEWPORT_MARGIN
-        top_boundary = self.height - VIEWPORT_MARGIN
-        bottom_boundary = VIEWPORT_MARGIN
-        arcade.draw_lrtb_rectangle_outline(left_boundary, right_boundary, top_boundary, bottom_boundary,
-                                           arcade.color.RED, 2)
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
@@ -226,6 +219,7 @@ class MyGame(arcade.Window):
         for coin in coin_hit_list:
             coin.remove_from_sprite_lists()
             self.score += 1
+            arcade.play_sound(self.coin_sound)
 
         # Scroll the screen to the player
         self.scroll_to_player()
