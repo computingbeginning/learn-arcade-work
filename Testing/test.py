@@ -28,6 +28,8 @@ class MyGame(arcade.Window):
             for column in range(COLUMN_COUNT):
                 self.grid[row].append(0)
 
+        self.grid[3][4] = 1
+
     def on_draw(self):
         """
         Render the screen.
@@ -35,19 +37,32 @@ class MyGame(arcade.Window):
 
         arcade.start_render()
 
+        color = 0
+
         for row in range(ROW_COUNT):
             for column in range(COLUMN_COUNT):
                 x = (WIDTH / 2) + column * (WIDTH + MARGIN) + MARGIN
                 y = HEIGHT / 2 + row * (HEIGHT + MARGIN) + MARGIN
+                if self.grid[row][column] == 0:
+                    color = arcade.color.LIGHT_CYAN
+                elif self.grid[row][column] == 1:
+                    color = arcade.color.LIGHT_GREEN
+
                 arcade.draw_rectangle_filled(x, y,
                                              WIDTH, HEIGHT,
-                                             arcade.color.LIGHT_CYAN)
+                                             color)
 
     def on_mouse_press(self, x, y, button, key_modifiers):
         """
         Called when the user presses a mouse button.
         """
-        pass
+        row = y // (HEIGHT + MARGIN)
+        column = x // (WIDTH + MARGIN)
+        print("click", row, column)
+        if self.grid[row][column] == 1:
+            self.grid[row][column] = 0
+        elif self.grid[row][column] == 0:
+            self.grid[row][column] = 1
 
 
 def main():
