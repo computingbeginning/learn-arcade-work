@@ -64,10 +64,44 @@ class MyGame(arcade.Window):
         row = y // (HEIGHT + MARGIN)
         column = x // (WIDTH + MARGIN)
         print("click", row, column)
-        if self.grid[row][column] == 1:
-            self.grid[row][column] = 0
-        elif self.grid[row][column] == 0:
-            self.grid[row][column] = 1
+        if row < ROW_COUNT and column < COLUMN_COUNT:
+            if self.grid[row][column] == 1:
+                self.grid[row][column] = 0
+            elif self.grid[row][column] == 0:
+                self.grid[row][column] = 1
+
+        # This is for total cells
+        total_cells = 0
+        for row in range(ROW_COUNT):
+            for column in range(COLUMN_COUNT):
+                if self.grid[row][column] == 1:
+                    total_cells += 1
+        print("Total of", total_cells, "cells are selected.")
+
+        # This is for the cells in a row
+        for row in range(ROW_COUNT):
+            total_rows = 0
+            continuous_count = 0
+            for column in range(COLUMN_COUNT):
+                if self.grid[row][column] == 1:
+                    total_rows += 1
+                    continuous_count += 1
+                else:
+                    if continuous_count > 2:
+                        print("There are", continuous_count, "continuous blocks selected on row", row)
+                    continuous_count = 0
+            if continuous_count > 2:
+                print("There are", continuous_count, "continuous blocks selected on row", row)
+
+            print("Row", row, "has", total_rows, "cells selected.")
+
+        # This is for the cells in a column
+        for column in range(COLUMN_COUNT):
+            total_columns = 0
+            for row in range(ROW_COUNT):
+                if self.grid[row][column] == 1:
+                    total_columns += 1
+            print("Column", column, "has", total_columns, "cells selected.")
 
 
 def main():
