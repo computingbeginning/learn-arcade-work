@@ -1,0 +1,138 @@
+1. Write code to swap the values 25 and 40.
+
+my_list = [55, 41, 52, 68, 45, 27, 40, 25, 37, 26]
+
+temp = my_list[6]
+my_list[6] = my_list[7]
+my_list[7] = temp
+
+
+2. Write code to swap the values 2 and 27.
+
+my_list = [27, 32, 18,  2, 11, 57, 14, 38, 19, 91]
+
+temp = my_list[3]
+my_list[3] = my_list[0]
+my_list[0] = temp
+
+
+3. Why does the following code not work? Explain it, don't just list working code.
+
+my_list = [70, 32, 98, 88, 92, 36, 81, 83, 87, 66]
+temp = my_list[0]
+my_list[1] = my_list[0]
+my_list[0] = temp
+
+The reason this code doesn't work is that it is swapping the values in the wrong order.
+The temporary placement was already the value for the first number in the list.
+We change the second value without storing it, effectively losing it in place of the second value.
+We will get 70 in the first and second placement, and 32 will disappear.
+
+
+4. Show how the following numbers can be sorted using the selection sort.
+Show the numbers after each iteration of the outer loop, similar to what is shown in the book.
+I am NOT looking for a copy of the code to do the sort. If you include any code for problems 4-7 you are doing it wrong.
+
+97   74    8   98   47   62   12   11    0   60
+
+97   74    8   98   47   62   12   11    0   60 (Beginning)
+0   74    8   98   47   62   12   11    97   60
+0   8    74   98   47   62   12   11    97   60
+0   8    11   98   47   62   12   74    97   60
+0   8    11   12   47   62   98   74    97   60
+0   8    11   12   47   62   98   74    97   60 (No change, 47 is already in the correct spot)
+0   8    11   12   47   60   98   74    97   62
+0   8    11   12   47   60   62   74    97   98 (The placements do not change from here on, but it still runs to the end.)
+0   8    11   12   47   60   62   74    97   98
+0   8    11   12   47   60   62   74    97   98 (end)
+
+
+5. Show how the following numbers can be sorted using the selection sort:
+
+74   92   18   47   40   58    0   36   29   25
+
+74   92   18   47   40   58    0   36   29   25
+0   92   18   47   40   58    74   36   29   25
+0   18   92   47   40   58    74   36   29   25
+0   18   25   47   40   58    74   36   29   92
+0   18   25   29   40   58    74   36   47   92
+0   18   25   29   36   58    74   40   47   92
+0   18   25   29   36   40    74   58   47   92
+0   18   25   29   36   40    47   58   74   92 (The program continues to run, but everything is sorted from here on.)
+0   18   25   29   36   40    47   58   74   92
+0   18   25   29   36   40    47   58   74   92
+
+
+6. Show how the following numbers can be sorted using the INSERTION sort.
+(Note: If you think the 0 gets immediately sorted into position, you are doing it wrong.
+Go back and re-read how this sort works.)
+
+74   92   18   47   40   58    0   36   29   25
+
+74   92   18   47   40   58    0   36   29   25 (start)
+18   74   92   47   40   58    0   36   29   25
+18   47   74   92   40   58    0   36   29   25
+18   40   47   74   92   58    0   36   29   25
+18   40   47   58   74   92    0   36   29   25
+0   18   40   47   58   74   92   36   29   25
+0   18   36   40   47   58   74   92   29   25
+0   18   29   36   40   47   58   74   92   25
+0   18   25   29   36   40   47   58   74   92 (end)
+
+
+7. Show how the following numbers can be sorted using the insertion sort:
+
+37   11   14   50   24    7   17   88   99    9
+
+37   11   14   50   24    7   17   88   99    9 (start)
+11   37   14   50   24    7   17   88   99    9
+11   14   37   50   24    7   17   88   99    9
+11   14   24   37   50    7   17   88   99    9
+7   11   14   24   37   50   17   88   99    9
+7   11   14   17   24   37   50   88   99    9
+7    9   11   14   17   24   37   50   88   99 (end)
+
+
+8. Explain what `min_pos` does in the selection sort.
+
+min_pos is the minimum position in the list when performing the sort.
+In most cases, this will be the beginning of the list, at position 0.
+
+
+9. Explain what `cur_pos` does in the selection sort.
+
+cur_pos is the current position in the list at a given time during selection sort.
+This is the placement that is currently being held as the position that may be changed.
+
+
+10. Explain what `scan_pos` does in the selection sort.
+
+scan_pos is used to check the values in a list.
+This value is always at least one position greater than the current position.
+This is what is used to increment the check during the sort.
+If the value in the scan position is higher than the current position, then the two values will be swapped.
+
+
+11. Explain what `key_pos` and `key_value` are in the insertion sort.
+
+12. Explain `scan_pos` in the insertion sort.
+
+13. Look at the example sort program at the very end of this chapter:
+
+https://learn.arcade.academy/en/latest/chapters/30_sorting/sorting.html
+
+
+Modify the sorts to print the number of times the inside loop is run, and the number of times the outside loop is run.
+Modify the program to work with a list of 100. Paste the code you used here.
+Run the program and list the numbers you got here. (DON'T FORGET TO INCLUDE THE RESULTS!)
+Inside loop for selection sort should be about 5,000, and insertion sort 2,500.
+Double-check if you don't get numbers close to these.
+
+
+
+To turn in: Upload your .txt file. Just drag it from PyCharm to the upload for the assignment.
+(BUT WAIT! Make sure you include the results from #13, and not just the program.)
+Alternatively, turn in a link to the GitHub for the worksheet.
+
+
+  ((Go back later to double-check the definition of terms for both selection and insertion sorts.))
