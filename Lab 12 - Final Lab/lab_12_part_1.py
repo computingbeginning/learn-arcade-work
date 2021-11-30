@@ -9,8 +9,17 @@ class Room:
         self.down = down
 
 
+class Item:
+    def __init__(self, description, name, room_number):
+        self.description = description
+        self.name = name
+        self.room_number = room_number
+
+
 def main():
     room_list = []
+    item_list = []
+
     # room0 is the foyer of the mansion, the starting point.
     room0 = Room("The Foyer of the mansion is grand, decorated with paintings and candelabras on the wall.\n"
                  "A chandelier hangs above the center of the room.\n"
@@ -169,6 +178,15 @@ def main():
                   None,
                   None)
     room_list.append(room12)
+
+    # Appended items
+
+    item1 = Item("This is a large block of ice, with a bone poking out of the edge."
+                 "You found it in the freezer."
+                 "Perhaps the bone could be useful if you could thaw it out.",
+                 "ice",
+                 0)
+    item_list.append(item1)
 
     current_room = 0
 
