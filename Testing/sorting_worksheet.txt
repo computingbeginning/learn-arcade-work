@@ -119,7 +119,8 @@ key value is the value of a selected number within a list, and key_pos is that v
 
 12. Explain `scan_pos` in the insertion sort.
 
-Scan position allows for the sort to operate. It takes the current position of the search in the list, and check it with the value to the left.
+Scan position allows for the sort to operate. It takes the current position of the search in the list,
+and check it with the value to the left.
 Scan position checks to see if this key value is lower than the value to the left, and if it is, it moves it to the left.
 
 13. Look at the example sort program at the very end of this chapter:

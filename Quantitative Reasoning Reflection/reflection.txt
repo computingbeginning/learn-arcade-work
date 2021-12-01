@@ -1,0 +1,53 @@
+
+My Quantitative Reasoning Reflection
+
+Brady Shannon
+December 1st, 2021
+
+
+1. There are a huge variety of quantitative methods and techniques available to
+use. "If" statements are used to choose between multiple choices, options, or
+conditions available in the code. It checks to see if a certain condition is met
+or not.
+
+
+2. When working with others, it is necessary to make code easy to read and
+understand. The best way to start this is to include a brief description of the
+code in quotations at the beginning of the program to give an idea of why this
+code exists. Usually, the names of variables, functions, and classes can help a
+person understand either the purpose of the code or what the code represents.
+Names like "coin_list" or "player_character" makes it obvious what a piece of
+code is used for. One thing that can help the readability of code is to make
+sure to add spaces between sections of code. This helps each section stand out,
+and makes it easier to identify and read. If needed, you can add comment above
+or in a section of code with a description of what it is or what it is doing.
+Also, you should make sure to keep similar pieces of code close to one another,
+such as having imports and classes up at the beginning of the code.
+
+
+3. Testing  code is extremely important, because there may be mistakes and errors
+present that is not easily able to see by looking at the code alone. If testing
+is not performed, errors can easily be missed. If you encounter an error during
+programming and testing, you should start by reading the error message that is
+being given in the terminal. This message can be used to determine what the error
+is and where in the code it is coming from. Following the trail will lead you to
+what is causing the problem, and you can adjust the code to fix it. One method
+of figuring out if the result is correct is to print the result out in your
+terminal. If it doesn't match, then something is wrong and can be fixed.
+
+
+4. While numerical methods are useful, they are not always perfect. Algorithms
+cannot yet make the kind of complex decisions that humans are capable of. Humans
+can identify and take care of certain things that methods and algorithms miss
+easily. An algorithm can look at test scores of a student and make an evaluation
+of their progress, but they can't measure things like how the student is engaging
+in class or if the student isn't good at taking tests. The same sort of things
+applies to the teachers as well. A teacher may be excellent at their job, but if
+several students were not engaged in the class, and therefore didn't do well, an
+algorithm would bring the evaluation of the teacher down. There is more
+information present than just the numbers, but algorithms are unable to see this.
+As another example, a cross country runner may have done bad in a race because
+they hurt their leg. The algorithm will not account for this, looking solely at
+the numbers. This is why humans are still present in this process. We can account
+for outside information that algorithms do not receive. We can make judgements
+and decisions to make up for their imperfections.
