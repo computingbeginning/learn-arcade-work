@@ -10,10 +10,10 @@ class Room:
 
 
 class Item:
-    def __init__(self, description, name, room_number):
+    def __init__(self, description, name, room_location):
         self.description = description
         self.name = name
-        self.room_number = room_number
+        self.room_location = room_location
 
 
 def main():
@@ -181,8 +181,8 @@ def main():
 
     # Appended items
 
-    item1 = Item("This is a large block of ice, with a bone poking out of the edge."
-                 "You found it in the freezer."
+    item1 = Item("This is a large block of ice, with a bone poking out of the edge. "
+                 "You found it in the freezer. \n"
                  "Perhaps the bone could be useful if you could thaw it out.",
                  "ice",
                  0)
@@ -195,10 +195,29 @@ def main():
     while not done:
         print()
         print(room_list[current_room].description)
-        user_input = input("Where would you like to go? ")
+
+        for item in item_list:
+            if item.room_location == current_room:
+                print(item.description)
+
+        user_input = input("What is your command? ")
+
+        command_words = user_input.split(" ")
+
+        user_input = command_words[0]
+
+        if len(command_words) == 2:
+            second_word = command_words[1]
+        else:
+            second_word = None
+
+        if len(command_words) == 3:
+            third_word = command_words[2]
+        else:
+            third_word = None
 
         # This is for going north
-        if user_input.lower() == "north":
+        if user_input.lower() == "north" or (user_input.lower() == "go" and second_word.lower() == "north"):
             next_room = room_list[current_room].north
             if next_room is None:
                 print("You can't go that way.")
@@ -206,7 +225,7 @@ def main():
                 current_room = next_room
 
         # This is for going east
-        elif user_input.lower() == "east":
+        elif user_input.lower() == "east" or (user_input.lower() == "go" and second_word.lower() == "east"):
             next_room = room_list[current_room].east
             if next_room is None:
                 print("You can't go that way.")
@@ -214,7 +233,7 @@ def main():
                 current_room = next_room
 
         # This is for moving south
-        elif user_input.lower() == "south":
+        elif user_input.lower() == "south" or (user_input.lower() == "go" and second_word.lower() == "south"):
             next_room = room_list[current_room].south
             if next_room is None:
                 print("You can't go that way.")
@@ -222,14 +241,69 @@ def main():
                 current_room = next_room
 
         # This is for moving west
-        elif user_input.lower() == "west":
+        elif user_input.lower() == "west" or (user_input.lower() == "go" and second_word.lower() == "west"):
             next_room = room_list[current_room].west
             if next_room is None:
                 print("You can't go that way.")
             else:
                 current_room = next_room
 
-        elif user_input.lower() == "quit" or user_input.lower() == "quit game":
+        # Used for moving up
+        elif user_input.lower() == "up" or (user_input.lower() == "go" and second_word.lower() == "up"):
+            next_room = room_list[current_room].up
+            if next_room is None:
+                print("You can't go that way.")
+            else:
+                current_room = next_room
+
+        # Used for moving down
+        elif user_input.lower() == "down" or (user_input.lower() == "go" and second_word.lower() == "down"):
+            next_room = room_list[current_room].down
+            if next_room is None:
+                print("You can't go that way.")
+            else:
+                current_room = next_room
+
+        elif user_input.lower() == "get":
+            for item in item_list:
+                if item.name == second_word.lower() and item.room_location == current_room:
+                    item.room_location = -1
+                    print("You picked up the", item.name)
+                elif item.name == third_word.lower() and item.room_location == current_room:
+                    item.room_location -= 1
+                    print("You picked up the", item.name)
+                else:
+                    print("I don't understand what you typed.")
+
+        elif user_input.lower() == "inventory" or (user_input.lower() == "check" and second_word.lower() == "inventory"):
+            inventory_count = 0
+            for item in item_list:
+                if item.room_location == -1:
+                    inventory_count += 1
+                    print(item.name, "\n", item.description)
+            if inventory_count == 0:
+                print("Your inventory is empty.")
+
+        elif user_input.lower() == "drop":
+            for item in item_list:
+                if item.name == second_word.lower() and item.room_location == -1:
+                    confirm_input = input("Are you sure you want to drop this item? ")
+                    if confirm_input.lower() == "yes":
+                        item.room_location = current_room
+                        print("You dropped the item.")
+                    elif confirm_input.lower() == "no":
+                        print("You did not drop the item.")
+                    else:
+                        print("I didn't understand what you typed, so the item was not dropped.")
+
+        elif user_input.lower() == "use":
+            for item in item_list:
+                if (item.name == second_word.lower() or item.name == third_word.lower()) and item.room_location == -1:
+                    print("You tried to use the", item.name)
+                elif (item.name == second_word.lower() or item.name == third_word.lower()) and item.room_location != -1:
+                    print("You do not have this item yet.")
+
+        elif user_input.lower() == "quit" or (user_input.lower() == "quit" and second_word.lower() == "game"):
             done = True
 
         else:
