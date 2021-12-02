@@ -96,7 +96,8 @@ Go back and re-read how this sort works.)
 8. Explain what `min_pos` does in the selection sort.
 
 min_pos is the minimum position in the list when performing the sort.
-In most cases, this will be the beginning of the list, at position 0.
+In most cases, this will start at the beginning of the list, at position 0, and
+works from left to right.
 
 
 9. Explain what `cur_pos` does in the selection sort.
@@ -135,6 +136,112 @@ Inside loop for selection sort should be about 5,000, and insertion sort 2,500.
 Double-check if you don't get numbers close to these.
 
 
+import random
+
+
+def selection_sort(my_list):
+    """ Sort a list using the selection sort """
+
+    selection_sort_outside_list = 0
+    selection_sort_inside_list = 0
+
+    # Loop through the entire array
+    for cur_pos in range(len(my_list)):
+        # Find the position that has the smallest number
+        # Start with the current position
+        min_pos = cur_pos
+
+        selection_sort_outside_list += 1
+
+        # Scan left to right (end of the list)
+        for scan_pos in range(cur_pos + 1, len(my_list)):
+            selection_sort_inside_list += 1
+
+            # Is this position smallest?
+            if my_list[scan_pos] < my_list[min_pos]:
+                # It is, mark this position as the smallest
+                min_pos = scan_pos
+
+        # Swap the two values
+        temp = my_list[min_pos]
+        my_list[min_pos] = my_list[cur_pos]
+        my_list[cur_pos] = temp
+
+    print("Outside list ran", selection_sort_outside_list, "times.")
+    print("Inside list ran", selection_sort_inside_list, "times.")
+
+
+def insertion_sort(my_list):
+    """ Sort a list using the insertion sort """
+
+    insertion_sort_outside_list = 0
+    insertion_sort_inside_list = 0
+
+    # Start at the second element (pos 1).
+    # Use this element to insert into the
+    # list.
+    for key_pos in range(1, len(my_list)):
+
+        # Get the value of the element to insert
+        key_value = my_list[key_pos]
+
+        # Scan from right to the left (start of list)
+        scan_pos = key_pos - 1
+
+        insertion_sort_outside_list += 1
+
+        # Loop each element, moving them up until
+        # we reach the position the
+        while (scan_pos >= 0) and (my_list[scan_pos] > key_value):
+            my_list[scan_pos + 1] = my_list[scan_pos]
+            scan_pos = scan_pos - 1
+
+            insertion_sort_inside_list += 1
+
+        # Everything's been moved out of the way, insert
+        # the key into the correct location
+        my_list[scan_pos + 1] = key_value
+
+    print("Outside list ran", insertion_sort_outside_list, "times.")
+    print("Inside list ran", insertion_sort_inside_list, "times.")
+
+
+# This will point out a list
+# For more information on the print formatting {:3}
+# see the chapter on print formatting.
+def print_list(my_list):
+    for item in my_list:
+        print(f"{item:3}", end="")
+    print()
+
+
+def main():
+    # Create two lists of the same random numbers
+    list_for_selection_sort = []
+    list_for_insertion_sort = []
+    list_size = 100
+    for i in range(list_size):
+        new_number = random.randrange(100)
+        list_for_selection_sort.append(new_number)
+        list_for_insertion_sort.append(new_number)
+
+    # Print the original list
+    print("Original List")
+    print_list(list_for_selection_sort)
+
+    # Use the selection sort and print the result
+    print("Selection Sort")
+    selection_sort(list_for_selection_sort)
+    print_list(list_for_selection_sort)
+
+    # Use the insertion sort and print the result
+    print("Insertion Sort")
+    insertion_sort(list_for_insertion_sort)
+    print_list(list_for_insertion_sort)
+
+
+main()
+
 
 To turn in: Upload your .txt file. Just drag it from PyCharm to the upload for the assignment.
 (BUT WAIT! Make sure you include the results from #13, and not just the program.)
@@ -142,3 +249,16 @@ Alternatively, turn in a link to the GitHub for the worksheet.
 
 
   ((Go back later to double-check the definition of terms for both selection and insertion sorts.))
+
+Results for # 13:
+
+Original List
+ 43 58 38  0 77 35 70 84 35  9 58 53 79 38  9 49 22 95 88 79 88 47 64  5 90 58 19 95 76 34  2 29 54 89 57 62 26 60 55 42 36 25 38 78 72 71 95 73 80 75 13 77 43 15 71 76 63 76 14 51 79 43 94 64 96 49 84 37 65 75  9 44 62 98 79 58 47 77 40 46 10 44 92 79 31 24 29 77 32 62  2 82  8 28 10 18 37 50 10 79
+Selection Sort
+Outside list ran 100 times.
+Inside list ran 4950 times.
+  0  2  2  5  8  9  9  9 10 10 10 13 14 15 18 19 22 24 25 26 28 29 29 31 32 34 35 35 36 37 37 38 38 38 40 42 43 43 43 44 44 46 47 47 49 49 50 51 53 54 55 57 58 58 58 58 60 62 62 62 63 64 64 65 70 71 71 72 73 75 75 76 76 76 77 77 77 77 78 79 79 79 79 79 79 80 82 84 84 88 88 89 90 92 94 95 95 95 96 98
+Insertion Sort
+Outside list ran 99 times.
+Inside list ran 2546 times.
+  0  2  2  5  8  9  9  9 10 10 10 13 14 15 18 19 22 24 25 26 28 29 29 31 32 34 35 35 36 37 37 38 38 38 40 42 43 43 43 44 44 46 47 47 49 49 50 51 53 54 55 57 58 58 58 58 60 62 62 62 63 64 64 65 70 71 71 72 73 75 75 76 76 76 77 77 77 77 78 79 79 79 79 79 79 80 82 84 84 88 88 89 90 92 94 95 95 95 96 98
