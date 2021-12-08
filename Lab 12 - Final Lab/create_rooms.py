@@ -6,7 +6,6 @@ def create_rooms():
 
     # room0 is the foyer of the mansion, the starting point.
     room0 = Room("The Foyer of the mansion is grand, decorated with paintings and candelabras on the wall.\n"
-                 "A chandelier hangs above the center of the room.\n"
                  "There are two doors present, one in the north face of the room, and one in the south face.",
                  4,
                  None,
@@ -115,11 +114,11 @@ def create_rooms():
 
     # Room 9 is the kitchen
     room9 = Room("You enter the room and find a large kitchen. \n"
-                 "It is surprisingly clean. \n"
-                 "There is a door on the north wall.",
+                 "It is surprisingly clean, and the stove seems brand new. \n"
+                 "There is a door on the north wall, and a large metal door embedded in the south end of the room.",
                  8,
                  None,
-                 None,
+                 13,
                  None,
                  None,
                  None)
@@ -162,5 +161,15 @@ def create_rooms():
                   None,
                   None)
     room_list.append(room12)
+
+    room13 = Room("Brr! This room is a freezer! It is filled with frozen meats and deserts.\n"
+                  "The only exit is back the way you came.",
+                  9,
+                  None,
+                  None,
+                  None,
+                  None,
+                  None)
+    room_list.append(room13)
 
     return room_list

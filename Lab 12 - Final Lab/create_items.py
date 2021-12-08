@@ -13,19 +13,26 @@ def create_items():
                  "You found it in the freezer. \n"
                  "Perhaps the bone could be useful if you could thaw it out.",
                  "ice",
-                 0)
+                 13)
     item_list.append(item1)
 
     item2 = Item("You spot a key with a diamond handle hanging on the wall.",
                  "A key with a diamond shape built into the end of the handle.\n"
                  "Perhaps this is the key to the courtyard gate?",
                  "gate key",
-                 -1)
+                 11)
     item_list.append(item2)
 
     item3 = Item("There is a flashlight propped on a barrel.",
                  "This is the flashlight you found in the tool shed.",
                  "flashlight",
                  2)
+    item_list.append(item3)
+
+    item4 = Item(None,
+                 "This is the bone you got from melting the ice. What can it be used for?",
+                 "bone",
+                 -2)
+    item_list.append(item4)
 
     return item_list
