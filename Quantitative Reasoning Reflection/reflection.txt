@@ -8,7 +8,16 @@ December 1st, 2021
 1. There are a huge variety of quantitative methods and techniques available to
 use. "If" statements are used to choose between multiple choices, options, or
 conditions available in the code. It checks to see if a certain condition is met
-or not.
+or not. "For loops" are used to use or check a piece of code multiple times, and
+is usually used for a range of numbers, though it can be used for much more.
+Classes were made to add properties to something in the code, and the class
+format allows for multiple items to be created with those parameters. Many of
+these things used or interacted with lists, which can be used to append different
+numbers and strings. Each technique has their own set of specialties and uses.
+For instance, a "For loop" could be used to check items within a list and repeat
+within a certain range, and a "while loop" will continue until a certain
+condition is met. It all depends on what you are trying to return, and they can
+be used together to make a variety of different results.
 
 
 2. When working with others, it is necessary to make code easy to read and
