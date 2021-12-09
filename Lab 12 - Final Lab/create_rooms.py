@@ -19,7 +19,7 @@ def create_rooms():
     room1 = Room("The full moon above illuminates the large courtyard. \n"
                  "The courtyard is filled with wilted flowers and a flowing fountain. \n"
                  "The east side of the courtyard has a tool shed, and the east side has a dog house. \n"
-                 "The north shows the entrance to the mansion, and the south shows the locked gate.)",
+                 "The north shows the entrance to the mansion, and the south shows a locked gate.",
                  0,
                  2,
                  12,
@@ -41,8 +41,7 @@ def create_rooms():
 
     # Room 3 is the dog house
     room3 = Room("You stumble upon a small dog house in the corner of the courtyard. \n"
-                 "It sounds like something is inside. \n"
-                 "All you can do now is go back the way you came.",
+                 "You can go back the way you came.",
                  None,
                  1,
                  None,
@@ -162,6 +161,7 @@ def create_rooms():
                   None)
     room_list.append(room12)
 
+    # Freezer with the ice
     room13 = Room("Brr! This room is a freezer! It is filled with frozen meats and deserts.\n"
                   "The only exit is back the way you came.",
                   9,
