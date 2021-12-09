@@ -11,7 +11,7 @@ def create_rooms():
                  None,
                  1,
                  None,
-                 None,
+                 14,
                  None)
     room_list.append(room0)
 
@@ -129,7 +129,7 @@ def create_rooms():
                   "a large wine cabinet. \n"
                   "As far as you can tell, you may only be able to return through the door on the southern wall.",
                   None,
-                  11,
+                  11,  # Needs to be adjusted so the hidden room isn't found by accident.
                   8,
                   None,
                   None,
@@ -171,5 +171,30 @@ def create_rooms():
                   None,
                   None)
     room_list.append(room13)
+
+    # Second floor of the foyer. May add more to this section.
+    room14 = Room("You are now standing in the second level of the balcony, overlooking the grand room.\n"
+                  "In front of you there is a large door, and behind you are the staircases.\n" 
+                  "There seem to be walkways to your left and right, "
+                  "but they seem to have broken away a long time ago. \nYou will not be able to explore those areas.",
+                  15,
+                  None,
+                  None,
+                  None,
+                  None,
+                  0)
+    room_list.append(room14)
+
+    # Hallway on the second floor
+    room15 = Room("You are standing in a dark hallway.\nIt is hard to see very far, but you can make out doors on the "
+                  "eastern and western walls, as well as a south door to the foyer.\n You will need to explore more "
+                  "to see if there are any other places to search.",
+                  16,
+                  17,
+                  14,
+                  18,
+                  None,
+                  None)
+    room_list.append(room15)
 
     return room_list

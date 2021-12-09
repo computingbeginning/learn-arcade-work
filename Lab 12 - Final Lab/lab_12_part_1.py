@@ -11,14 +11,15 @@ def main():
 
     current_room = 0
     previous_room = None
-    chandelier_trigger = 0
+    first_item_trigger = 0
     max_player_health = 5
     current_player_health = max_player_health
     ghost_dog_trigger = 0
+    chandelier_trigger = 0
 
-    print("You wake up in a strange building, unsure of how you arrived there.\n"
+    print("\nYou wake up in a strange building, unsure of how you arrived there.\n"
           "One thing is clear: This building is haunted!\n"
-          "You will need to explore the mansion in order to find an exit. Good luck!\n")
+          "You will need to explore the mansion in order to find an exit. Good luck!")
 
     done = False
 
@@ -34,7 +35,7 @@ def main():
             print("There is a grand chandelier hanging above you.")
             if random.randrange(0, 21) == 1:
                 print("Suddenly, the chandelier seems to shake... violently!")
-                dodge_input = input("Watch out! ")
+                dodge_input = input("  Watch out! ")
                 if dodge_input.lower() == "move" or dodge_input.lower() == "dodge":
                     print("You move out of the way in the nick of time, as the chandelier crashes to the ground!")
                     print("You can hear distant laughter. You are certainly not alone in this place.")
@@ -54,6 +55,13 @@ def main():
         elif current_room == 0 and chandelier_trigger == 1:
             print("The large chandelier sits in the middle of the foyer, still elegant despite being shattered.")
 
+        if chandelier_trigger == 0 and current_room == 14:
+            print("You can see the chandelier much more clearly now. "
+                  "But, upon further inspection, it seems a bit... unstable.\n"
+                  "Perhaps the first floor foyer isn't the safest place to be..")
+        elif chandelier_trigger == 1 and current_room == 14:
+            print("Looking down, you can see the chandelier, embedded in the center of the foyer.")
+
         if ghost_dog_trigger == 0 and current_room == 3:
             print("You see a translucent dog sleeping in the dog house. It seems even the dog is ghostly!")
         elif ghost_dog_trigger == 1 and current_room == 3:
@@ -62,7 +70,7 @@ def main():
         if ghost_dog_trigger == 1 and current_room == 1:
             print("The dog is sitting in the courtyard, chewing on the bone.")
 
-        user_input = input("What is your command? ")
+        user_input = input("\n  What is your command? ")
 
         command_words = user_input.split(" ")
 
@@ -84,6 +92,7 @@ def main():
             if next_room is None:
                 print("You can't go that way.")
             else:
+                print("You go north.")
                 previous_room = current_room
                 current_room = next_room
 
@@ -93,6 +102,7 @@ def main():
             if next_room is None:
                 print("You can't go that way.")
             else:
+                print("You go east.")
                 previous_room = current_room
                 current_room = next_room
 
@@ -102,6 +112,7 @@ def main():
             if next_room is None:
                 print("You can't go that way.")
             else:
+                print("You go south.")
                 previous_room = current_room
                 current_room = next_room
 
@@ -111,6 +122,7 @@ def main():
             if next_room is None:
                 print("You can't go that way.")
             else:
+                print("You go west.")
                 previous_room = current_room
                 current_room = next_room
 
@@ -120,6 +132,7 @@ def main():
             if next_room is None:
                 print("You can't go that way.")
             else:
+                print("You go up.")
                 previous_room = current_room
                 current_room = next_room
 
@@ -129,15 +142,25 @@ def main():
             if next_room is None:
                 print("You can't go that way.")
             else:
+                print("You go down.")
                 previous_room = current_room
                 current_room = next_room
 
+        # Used for moving back to your previous room. Currently only tracks one room at a time, cannot be used
+        # consecutively.
         elif user_input.lower() == "back" or (user_input.lower() == "go" and second_word.lower() == "back"):
             if previous_room is None:
                 print("You can't go back to where you were.")
+            elif previous_room == current_room:
+                print("You are already in this room.")
             else:
+                print("You go back.")
+                temp = current_room
                 current_room = previous_room
+                previous_room = temp
 
+        # Used to get items. Maybe should make another for 'pick up'? There is also a trigger being used to see if
+        # the player has picked up an item before. If not, it will explain how to check the inventory.
         elif user_input.lower() == "get":
             found = False
             for item in item_list:
@@ -145,19 +168,25 @@ def main():
                     item.room_location = -1
                     print("You picked up the", item.name)
                     found = True
+                    if first_item_trigger == 0:
+                        print("Hint: You can see your current health and items by typing \'inventory\'"
+                              "or \'check inventory\'. Give it a try!")
+                        first_item_trigger = 1
             if not found:
                 print("I don't understand what you typed.")
 
+        # Used to check inventory, consisting of items and health
         elif user_input.lower() == "inventory" or (user_input.lower() == "check" and second_word.lower() == "inventory"):
             inventory_count = 0
             print("Your health is currently", current_player_health, "out of", max_player_health)
             for item in item_list:
                 if item.room_location == -1:
                     inventory_count += 1
-                    print(item.name, "\n", item.des_in_inventory)
+                    print(item.name, "\n ", item.des_in_inventory)
             if inventory_count == 0:
                 print("Your inventory is empty.")
 
+        # Used for dropping items. Dropped items can be picked up in the room they were dropped in.
         elif user_input.lower() == "drop":
             for item in item_list:
                 if item.name == second_word.lower() and item.room_location == -1:
@@ -170,6 +199,7 @@ def main():
                     else:
                         print("I didn't understand what you typed, so the item was not dropped.")
 
+        # This holds the ability to use items. Most items will disappear after a single use.
         elif user_input.lower() == "use":
             used = False
             for item in item_list:
@@ -193,13 +223,14 @@ def main():
                     elif item.name == "key" and current_room == 12 and item.room_location == -1:
                         # I could probably find some way to adjust the amount of print statements I had to something
                         # smaller and more manageable.
-                        print("You used the key on the rusty door, and it creakily swings open.")
-                        print("As you step through the gates, you hear a sudden cackle of laughter from the mansion.")
-                        print("You turn to see.. ghosts! Dozens of ghosts, all focused on you.")
-                        print("You hear one of the ghosts cry out, \"You'll be back again, won't you?\"")
-                        print("You turn and run. You have no reason to return.\n")
-                        print("Well... except for the dog.\n")
-                        print("\nCongrats! You escaped successfully! Thank you for playing!")
+                        print("You used the key on the rusty door, and it creakily swings open.\n"
+                              "As you step through the gates, you hear a sudden cackle of laughter from the mansion.\n"
+                              "You turn to see.. ghosts! Dozens of ghosts, all focused on you.\n"
+                              "You hear one of the ghosts cry out, \"Thanks for all the laughs! "
+                              "You'll be back again, won't you?\"\n"
+                              "You turn and run. You have no reason to return.\n"
+                              "Well... except for the dog.\n"
+                              "\nCongrats! You escaped successfully! Thank you for playing!")
                         done = True
             if not used:
                 print("You do not have this item yet.")
@@ -220,13 +251,13 @@ def main():
             print("I don't understand what you typed.")
 
         if current_player_health <= 0:
-            print("You fall back, defeated by your injuries, and you black out to the sound of laughter.")
+            print("You fall back, defeated by your injuries, and you black out to the sound of cackling laughter.")
             print("Game over!")
             done = True
 
 
 main()
-restart_input = input("Would you like to play again? ")
+restart_input = input("\n  Would you like to play again? ")
 if restart_input.lower() == "yes":
     main()
 else:
