@@ -44,4 +44,11 @@ def create_items():
                  -2)
     item_list.append(item4)
 
+    # This item was originally planned to grant an extra life upon death, but it will just be a collectable for now.
+    item5 = Item("There is a small golden totem sitting by the mirror.",
+                 "This is a golden totem you found in the master bedroom. It shines with a mysterious glow.",
+                 "totem",
+                 7)
+    item_list.append(item5)
+
     return item_list

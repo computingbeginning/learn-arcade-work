@@ -51,15 +51,12 @@ def create_rooms():
     room_list.append(room3)
 
     # Room 4 is the main hallway
-    room4 = Room("What a large hallway!\n"
-                 "You are not able to see down to either end from where you are.\n"
-                 "You will have to walk to different parts of the hallway to see some things. \n"
-                 "From where you are now, you can either walk to the east side of the hallway, or the west side. \n"
-                 "There is a tear in the north wall in front of you, and behind you is the door to the foyer",
-                 5,
-                 6,
+    room4 = Room("You walk into an extremely dark hallway. You aren't able to see down the hallway whatsoever.\n"
+                 "You won't be able to move forward in this hallway unless you could see where you are going.",
+                 None,
+                 None,
                  0,
-                 8,
+                 None,
                  None,
                  None)
     room_list.append(room4)
@@ -77,9 +74,9 @@ def create_rooms():
     room_list.append(room5)
 
     # Room 6 is the east side of the hallway
-    room6 = Room("You walk east down the hallway, keeping your hand to the wall for safety. \n"
-                 "From here, there is a door in the north wall, and the hallway to the west you came from.",
-                 7,
+    room6 = Room("You walk into the eastern side of the main hallway. \n"
+                 "From here, there is a door in the north wall, and the hallway towards the west.",
+                 None,
                  None,
                  None,
                  4,
@@ -88,19 +85,19 @@ def create_rooms():
     room_list.append(room6)
 
     # Room 7 is the master bedroom
-    room7 = Room("You enter the master bedroom. \n"
+    room7 = Room("You are in the master bedroom. \n"
                  "You spot a queen sized bed, a fancy fur rug, and an elegant mirror. \n"
-                 "There is a door on the south wall.",
+                 "You also notice the hole in the ceiling. There is a door on the south wall.",
                  None,
                  None,
-                 6,
+                 None,
                  None,
                  None,
                  None)
     room_list.append(room7)
 
     # Room 8 is the west side of the main hallway
-    room8 = Room("You stumble down the hallway's western side. \n"
+    room8 = Room("You stumble into the hallway's western side. \n"
                  "From here, you see two doors, one on the south wall, and one on the north wall. \n"
                  "You can also go back east to return to the middle of the hallway.",
                  10,
@@ -126,10 +123,9 @@ def create_rooms():
     # Room 10 is the dining hall
     room10 = Room("You are met with a grand dining hall, fit to serve over a dozen people. \n"
                   "You can see trolleys for transporting the food, and the eastern wall is fitted with "
-                  "a large wine cabinet. \n"
-                  "As far as you can tell, you may only be able to return through the door on the southern wall.",
+                  "a large wine cabinet. \n",
                   None,
-                  11,  # Needs to be adjusted so the hidden room isn't found by accident.
+                  None,
                   8,
                   None,
                   None,
@@ -137,8 +133,7 @@ def create_rooms():
     room_list.append(room10)
 
     # Room 11 is the hidden room behind the wine cabinet
-    room11 = Room("You pull on the wine cabinet, and it slides away from the wall, revealing a room hidden from the "
-                  "view of the dining hall. \n"
+    room11 = Room("You are standing in an old, decrepit room, one that looks like it hasn't been seen in decades. \n"
                   "This room is filled with paintings, furniture, and a ring of keys."
                   "The only way out of the room is to return to the dining hall.",
                   None,
@@ -186,15 +181,35 @@ def create_rooms():
     room_list.append(room14)
 
     # Hallway on the second floor
-    room15 = Room("You are standing in a dark hallway.\nIt is hard to see very far, but you can make out doors on the "
-                  "eastern and western walls, as well as a south door to the foyer.\n You will need to explore more "
-                  "to see if there are any other places to search.",
-                  16,
-                  17,
+    room15 = Room("You are standing in a very dark hallway, too dark for you to see without a light.\n"
+                  "It wouldn't be safe to go forward without a light source.",
+                  None,
+                  None,
                   14,
-                  18,
+                  None,
                   None,
                   None)
     room_list.append(room15)
+
+    # Second half of the hallway
+    room16 = Room("This is the other end of the dark hallway. The door to your left has been boarded up, but the door "
+                  "to your right should still be accessible.",
+                  None,
+                  17,
+                  15,
+                  None,
+                  None,
+                  None)
+    room_list.append(room16)
+
+    room17 = Room("This seems to be a storage area, filled with boxes and furniture covered in sheets.\n"
+                  "There is also a large hole in the center of the room. Where could it connect to?",
+                  None,
+                  None,
+                  None,
+                  16,
+                  None,
+                  7)
+    room_list.append(room17)
 
     return room_list

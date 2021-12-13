@@ -16,6 +16,8 @@ def main():
     current_player_health = max_player_health
     ghost_dog_trigger = 0
     chandelier_trigger = 0
+    desk_blocking_door_trigger = 0
+    wine_cabinet_trigger = 0
 
     print("\nYou wake up in a strange building, unsure of how you arrived there.\n"
           "One thing is clear: This building is haunted!\n"
@@ -33,7 +35,7 @@ def main():
 
         if chandelier_trigger == 0 and current_room == 0:
             print("There is a grand chandelier hanging above you.")
-            if random.randrange(0, 21) == 1:
+            if random.randrange(0, 16) == 1:
                 print("Suddenly, the chandelier seems to shake... violently!")
                 dodge_input = input("  Watch out! ")
                 if dodge_input.lower() == "move" or dodge_input.lower() == "dodge":
@@ -69,6 +71,16 @@ def main():
 
         if ghost_dog_trigger == 1 and current_room == 1:
             print("The dog is sitting in the courtyard, chewing on the bone.")
+
+        if desk_blocking_door_trigger == 0 and current_room == 7:
+            print("There is a desk blocking the doorway out of the bedroom.")
+        elif desk_blocking_door_trigger == 1 and current_room == 7:
+            print("The desk from before is sitting in the corner of the room, away from the door.")
+
+        if wine_cabinet_trigger == 0 and current_room == 10:
+            print("As far as you can tell, you can only go back the way you came from.")
+        elif wine_cabinet_trigger == 1 and current_room == 10:
+            print("Now that the cabinet is moved, you can see the metal door in the eastern wall.")
 
         user_input = input("\n  What is your command? ")
 
@@ -141,6 +153,10 @@ def main():
             next_room = room_list[current_room].down
             if next_room is None:
                 print("You can't go that way.")
+            elif next_room == 7:
+                print("You drop down the hole. \nYou end up landing on a very large bed, unscathed from damage.")
+                previous_room = None
+                current_room = next_room
             else:
                 print("You go down.")
                 previous_room = current_room
@@ -220,6 +236,25 @@ def main():
                         item_list[3].room_location = -3
                         item_list[4].room_location = 3
                         used = True
+                    elif item.name == "flashlight" and item.room_location == -1:
+                        print("You tried to use the flashlight to light your way.")
+                        if current_room == 4:
+                            room_list[4] = Room("What a large hallway! \nEven with the flashlight on, you will have to "
+                                                "walk further down the hallway to see more of it." 
+                                                "\nFrom where you are now, you can either walk to the east side of the "
+                                                "hallway, or the west side. \n"
+                                                "There is a tear in the north wall in front of you, and behind you is"
+                                                "the door to the foyer",
+                                                north=5, east=6, south=0, west=8, up=None, down=None)
+                            used = True
+                        elif current_room == 15:
+                            room_list[15] = Room("With the light of the flashlight, you can make out several doors.\n"
+                                                 "Several of them seem boarded up. You will still need to walk further "
+                                                 "down the hallway ahead of you to see the rest.",
+                                                 north=16, east=None, south=14, west=None, up=None, down=None)
+                            used = True
+                        else:
+                            print("You cannot use the flashlight here.")
                     elif item.name == "key" and current_room == 12 and item.room_location == -1:
                         # I could probably find some way to adjust the amount of print statements I had to something
                         # smaller and more manageable.
@@ -230,10 +265,43 @@ def main():
                               "You'll be back again, won't you?\"\n"
                               "You turn and run. You have no reason to return.\n"
                               "Well... except for the dog.\n"
-                              "\nCongrats! You escaped successfully! Thank you for playing!")
+                              "\nCongrats! You escaped successfully!\n")
+                        if item_list[5].room_location == -1:
+                            print("You even found the secret totem! You've done well!")
+                        print("Thank you for playing!")
                         done = True
             if not used:
                 print("You do not have this item yet.")
+
+        # Used for moving or pushing the cabinet or the desk away from their respective doors.
+        elif user_input.lower() == "move" or user_input.lower() == "push":
+            if second_word.lower() == "desk" or (second_word.lower() == "the" and third_word.lower() == "desk"):
+                if desk_blocking_door_trigger == 0 and current_room == 7:
+                    print("You push the desk out of the way of the door, allowing you to use the door.")
+                    desk_blocking_door_trigger = 1
+                    room_list[7] = Room("You are in the master bedroom. \n"
+                                        "You spot a queen sized bed, a fancy fur rug, and an elegant mirror. \n"
+                                        "You also notice the hole in the ceiling. There is a door on the south wall.",
+                                        north=None, east=None, south=6, west=None, up=None, down=None)
+                    room_list[6] = Room("You walk east down the hallway, keeping your hand to the wall for safety. \n"
+                                        "From here, there is a door in the north wall, and the hallway to the west "
+                                        "where you came from.",
+                                        north=7, east=None, south=None, west=4, up=None, down=None)
+                else:
+                    print("You can't do that here.")
+            elif second_word.lower() == "cabinet" or (second_word.lower() == "the" and third_word.lower() == "cabinet"):
+                if current_room == 10 and wine_cabinet_trigger == 0:
+                    print("You push the wine cabinet, and it slides away easily. \n"
+                          "You can now see a large metal door that was previously being obscured from view.")
+                    wine_cabinet_trigger = 1
+                    room_list[10] = Room("You are met with a grand dining hall, fit to serve over a dozen people. \n"
+                                         "You can see trolleys for transporting the food, and the eastern wall is "
+                                         "fitted with a large wine cabinet.",
+                                         north=None, east=11, south=8, west=None, up=None, down=None)
+                else:
+                    print("You can't do that here.")
+            else:
+                print("You can't do that here.")
 
         # Gives the ability to pet the dog.
         elif user_input.lower() == "pet" or (user_input.lower() == "pet" and second_word.lower() == "dog"):
@@ -241,7 +309,7 @@ def main():
                 print("The dog growls before biting you on the arm!")
                 print("You stumble back, away from the dog. It seems it doesn't trust you enough.")
                 current_player_health -= 2
-            elif ghost_dog_trigger == 1 and current_room == 3:
+            elif ghost_dog_trigger == 1 and current_room == 1:
                 print("You pet the dog, and they smile. You are certainly their friend now.")
 
         elif user_input.lower() == "quit" or (user_input.lower() == "quit" and second_word.lower() == "game"):
