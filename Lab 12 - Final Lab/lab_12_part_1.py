@@ -275,7 +275,7 @@ def main():
 
         # Used for moving or pushing the cabinet or the desk away from their respective doors.
         elif user_input.lower() == "move" or user_input.lower() == "push":
-            if second_word.lower() == "desk" or (second_word.lower() == "the" and third_word.lower() == "desk"):
+            if second_word == "desk" or (second_word == "the" and third_word == "desk"):
                 if desk_blocking_door_trigger == 0 and current_room == 7:
                     print("You push the desk out of the way of the door, allowing you to use the door.")
                     desk_blocking_door_trigger = 1
@@ -289,7 +289,7 @@ def main():
                                         north=7, east=None, south=None, west=4, up=None, down=None)
                 else:
                     print("You can't do that here.")
-            elif second_word.lower() == "cabinet" or (second_word.lower() == "the" and third_word.lower() == "cabinet"):
+            elif second_word == "cabinet" or (second_word == "the" and third_word == "cabinet"):
                 if current_room == 10 and wine_cabinet_trigger == 0:
                     print("You push the wine cabinet, and it slides away easily. \n"
                           "You can now see a large metal door that was previously being obscured from view.")
@@ -303,6 +303,22 @@ def main():
             else:
                 print("You can't do that here.")
 
+        # Lets the player search things, currently only for checking the doghouse
+        elif user_input.lower() == "search":
+            if second_word == "doghouse":
+                if current_room == 3 and ghost_dog_trigger == 1:
+                    print("You searched around the doghouse and discovered a picture lying on the ground!\n"
+                          "You pick up the picture, wiping the dog slobber off of it.")
+                    item_list[4].room_location = -1
+                elif current_room == 3 and ghost_dog_trigger == 0:
+                    print("You try to search the doghouse, but the dog bites you!\n"
+                          "You will need to find a way to get the dog out of the doghouse.")
+                    current_player_health -= 2
+                else:
+                    print("You can't do that here.")
+            else:
+                print("I don't understand what you typed.")
+
         # Gives the ability to pet the dog.
         elif user_input.lower() == "pet" or (user_input.lower() == "pet" and second_word.lower() == "dog"):
             if ghost_dog_trigger == 0 and current_room == 3:
@@ -312,12 +328,14 @@ def main():
             elif ghost_dog_trigger == 1 and current_room == 1:
                 print("You pet the dog, and they smile. You are certainly their friend now.")
 
+        # Quitting the game
         elif user_input.lower() == "quit" or (user_input.lower() == "quit" and second_word.lower() == "game"):
             done = True
 
         else:
             print("I don't understand what you typed.")
 
+        # If the player loses enough health, they die.
         if current_player_health <= 0:
             print("You fall back, defeated by your injuries, and you black out to the sound of cackling laughter.")
             print("Game over!")
